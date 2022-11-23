@@ -3,7 +3,7 @@ import { Server } from './../interface/server';
 import { CustomeResponse } from './../interface/custom-response';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, never, Observable, tap, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
