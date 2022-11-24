@@ -6,7 +6,8 @@
     <span class="col-6 fs-2 fw-semibold">Manager Servers</span>
 
     <div class="col-6">
-      <select class="btn btn-info m-2">
+      <select class="btn btn-info m-2" (ngModelChange)="filterServer($event)" ngModel="ALL">
+        <!-- <select class="btn btn-info m-2" (change)="filterServer($event)" > -->
         <option value="ALL">ALL</option>
         <option value="SERVER_UP">SERVER UP</option>
         <option value="SERVER_DOWN">SERVER DOWN</option>

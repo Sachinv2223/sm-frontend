@@ -77,7 +77,6 @@ export class AppComponent implements OnInit {
             this.dataSubject.value.data.servers[index] = response.data.server;
           }
           this.filterSubject.next('');
-          console.log(this.dataSubject.value);
           return { dataState: DataState.LOADED_STATE, appData: this.dataSubject.value }
         }),
         startWith({ dataState: DataState.LOADED_STATE, appData: this.dataSubject.value }),
@@ -87,6 +86,50 @@ export class AppComponent implements OnInit {
         })
       )
   }
+
+  // ? when we use (ngModelChange)
+  filterServer(status: Status): void {
+    this.appState$ = this.serverService.filter$(status, this.dataSubject.value)
+      .pipe(
+        map(response => {
+          return { dataState: DataState.LOADED_STATE, appData: response }
+        }),
+        startWith({ dataState: DataState.LOADED_STATE, appData: this.dataSubject.value }),
+        catchError((error: string) => {
+          this.filterSubject.next('');
+          return of({ dataState: DataState.ERROR_STATE, error: error });
+        })
+      )
+  }
+
+  // ? when we use (change)
+  // filterServer(event: Event): void {
+  //   let stat: Status = Status.ALL;
+  //   switch ((event.target as HTMLInputElement).value) {
+  //     case "SERVER_UP":
+  //       stat = Status.SERVER_UP;
+  //       break;
+  //     case "SERVER_DOWN":
+  //       stat = Status.SERVER_DOWN;
+  //       break;
+  //     default:
+  //       stat = Status.ALL;
+  //       break;
+  //   }
+  //   this.appState$ = this.serverService.filter$(stat, this.dataSubject.value)
+  //     .pipe(
+  //       map(response => {
+  //         return { dataState: DataState.LOADED_STATE, appData: response }
+  //       }),
+  //       startWith({ dataState: DataState.LOADED_STATE, appData: this.dataSubject.value }),
+  //       catchError((error: string) => {
+  //         this.filterSubject.next('');
+  //         return of({ dataState: DataState.ERROR_STATE, error: error });
+  //       })
+  //     )
+  // }
+
+
 
 
 }
